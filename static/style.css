@@ -1,0 +1,112 @@
+:root {
+    --bg: #f4f7f6;
+    --text: #333;
+    --card: #ffffff;
+    --accent: #2c3e50;
+    --btn: #27ae60;
+    --border: #ddd;
+}
+
+body.dark-mode {
+    --bg: #1a1a1a;
+    --text: #f4f4f4;
+    --card: #2d2d2d;
+    --accent: #3498db;
+    --btn: #2ecc71;
+    --border: #444;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', Tahoma, sans-serif;
+    transition: 0.3s;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.container {
+    width: 95%;
+    max-width: 850px;
+    margin-top: 40px;
+    padding-bottom: 40px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 10px;
+}
+
+.input-section form {
+    display: flex;
+    gap: 10px;
+}
+
+.input-section input {
+    flex: 1;
+    padding: 14px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+}
+
+.btn-main, .btn-secondary {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.btn-main { background-color: var(--btn); color: white; }
+.btn-secondary { background-color: var(--accent); color: white; }
+
+button:hover { transform: translateY(-2px); opacity: 0.9; }
+
+pre {
+    margin: 0;
+    font-family: inherit; /* Keeps your clean Segoe UI font */
+    
+    /* THE MAGIC FIX */
+    white-space: pre-wrap;       /* Maintains breaks but forces wrapping */
+    word-wrap: break-word;      /* Breaks long URLs or words if they don't fit */
+    overflow-wrap: break-word; 
+}
+
+.essay-box {
+    background: var(--card);
+    padding: 35px;
+    border-radius: 10px;
+    text-align: left;
+    margin: 25px 0;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: 1px solid var(--border);
+
+    /* EXTRA SAFETY: Ensures the box itself doesn't expand */
+    max-width: 100%;
+    box-sizing: border-box; 
+}
+
+pre { font-family: inherit; margin: 0; }
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.error-container {
+    color: #e74c3c;
+    background: rgba(231, 76, 60, 0.1);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naïm's Summarizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Naïm's Summarizer & Essay Maker</h1>
+            <button id="theme-toggle" class="btn-secondary">🌓 Toggle Theme</button>
+        </header>
+
+        <section class="input-section">
+            <form action="/generate" method="POST" id="gen-form">
+                <input type="url" name="url" placeholder="Paste website link here..." value="{{ original_url if original_url }}" required>
+                <button type="submit" class="btn-main" id="gen-btn">Generate Essay</button>
+            </form>
+        </section>
+
+        {% if error %}
+            <div class="error-container">
+                <p>⚠️ {{ error }}</p>
+            </div>
+        {% endif %}
+
+        {% if essay %}
+            <section class="result-section">
+                <div class="essay-box">
+                    <pre id="essay-text">{{ essay }}</pre>
+                </div>
+                
+                <div class="button-group">
+                    <button onclick="copyToClipboard()" class="btn-secondary" id="copy-btn">📋 Copy to Clipboard</button>
+                    
+                    <form action="/download" method="POST">
+                        <input type="hidden" name="essay_content" value="{{ essay }}">
+                        <button type="submit" class="btn-main">📥 Download .txt</button>
+                    </form>
+                </div>
+            </section>
+        {% endif %}
+    </div>
+
+   <script>
+    const themeBtn = document.getElementById("theme-toggle");
+    const body = document.body;
+
+    // 1. Check for saved theme on page load
+    if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+    }
+
+    // 2. Toggle and SAVE preference
+    themeBtn.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        
+        // Save the current state
+        if (body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+        } else {
+            localStorage.setItem("theme", "light");
+        }
+    });
+
+    // 3. Loading State for Generator
+    const genForm = document.getElementById("gen-form");
+    const genBtn = document.getElementById("gen-btn");
+    if (genForm) {
+        genForm.onsubmit = () => {
+        genBtn.innerText = "Analyzing Content...";
+        genBtn.disabled = true; // This is the magic line
+        genBtn.style.opacity = "0.5";
+        genBtn.style.cursor = "not-allowed";
+        };
+    }
+
+    // 4. Copy to Clipboard
+    function copyToClipboard() {
+        const text = document.getElementById('essay-text').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const btn = document.getElementById('copy-btn');
+            const originalText = btn.innerText;
+            btn.innerText = "✅ Copied!";
+            btn.style.backgroundColor = "#27ae60";
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.backgroundColor = ""; 
+            }, 2000);
+        });
+    }
+</script>
+</body>
+</html>
